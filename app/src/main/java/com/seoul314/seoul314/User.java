@@ -13,10 +13,12 @@ public class User {
     private int soloDistance;
     private int withDistance;
     private int relayDistance;
+    private int withSuccessCount;
+    private int withFirstCount;
 
     public User() {}
 
-    public User(String userId, String userPwd, String name, List<Double> location, int successWithRunNum, String picture, int soloDistance, int withDistance, int relayDistance) {
+    public User(String userId, String userPwd, String name, List<Double> location, int successWithRunNum, String picture, int soloDistance, int withDistance, int relayDistance, int withSuccessCount, int withFirstCount) {
         this.userId = userId;
         this.userPwd = userPwd;
         this.name = name;
@@ -26,6 +28,8 @@ public class User {
         this.soloDistance = soloDistance;
         this.withDistance = withDistance;
         this.relayDistance = relayDistance;
+        this.withSuccessCount = withSuccessCount;
+        this.withFirstCount = withFirstCount;
     }
 
     public String getUserId() {
@@ -98,5 +102,21 @@ public class User {
 
     public void setRelayDistance(int relayDistance) {
         this.relayDistance = relayDistance;
+    }
+
+    public int getWithSuccessCount() {
+        return withSuccessCount;
+    }
+
+    public void setWithSuccessCount(int withSuccessCount) {
+        this.withSuccessCount = withSuccessCount;
+    }
+
+    public int getWithFirstCount() {
+        return withFirstCount;
+    }
+
+    public void setWithFirstCount(int withFirstCount) {
+        this.withFirstCount = withFirstCount;
     }
 }

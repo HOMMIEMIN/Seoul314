@@ -48,7 +48,7 @@ public class SignActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if(task.isSuccessful()){
-                                        User user = new User(signId.getText().toString(),signPwd.getText().toString(),signName.getText().toString(),null,0,null,0,0,0);
+                                        User user = new User(signId.getText().toString(),signPwd.getText().toString(),signName.getText().toString(),null,0,null,0,0,0,0,0);
                                         reference.push().setValue(user);
                                         Toast.makeText(SignActivity.this, "회원가입 완료", Toast.LENGTH_SHORT).show();
                                         finish();

@@ -25,12 +25,25 @@
 
     </FrameLayout>
 
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="520dp"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:paddingTop="4dp"
+        app:menu="@menu/navigation">
+
+    </android.support.design.widget.BottomNavigationView>
+
     <LinearLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:behavior_peekHeight="48dp"
+        app:behavior_peekHeight="210dp"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
         <LinearLayout
@@ -41,17 +54,7 @@
 
 
 
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/navigation"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:background="@color/colorPrimaryDark"
-                android:paddingLeft="80dp"
-                android:paddingRight="80dp"
-                android:paddingTop="4dp"
-                app:menu="@menu/navigation">
 
-            </android.support.design.widget.BottomNavigationView>
             <FrameLayout
                 android:id="@+id/container_main"
                 android:layout_width="match_parent"

@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
                                         Intent intent = new Intent(LoginActivity.this,MapsActivity.class);
+                                        UtilDaoImple.getInstance().setLoginId(loginId.getText().toString());
                                         startActivity(intent);
                                         finish();
                                     }else{

@@ -57,7 +57,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     SoloFragment friendFragment = new SoloFragment();
                     transaction.replace(R.id.container_main, friendFragment);
                     transaction.commit();
-                    bottomSheetBehavior.setState(bottomSheetBehavior.STATE_EXPANDED);
+                    if(bottomSheetBehavior.getState() == bottomSheetBehavior.STATE_COLLAPSED){
+                        bottomSheetBehavior.setState(bottomSheetBehavior.STATE_EXPANDED);
+                    }else if(bottomSheetBehavior.getState() == bottomSheetBehavior.STATE_EXPANDED){
+                        bottomSheetBehavior.setState(bottomSheetBehavior.STATE_COLLAPSED);
+                    }
+
                     return true;
 
                 case R.id.navigation_dashboard:
@@ -66,6 +71,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     WithFragment withFragment = new WithFragment();
                     transaction1.replace(R.id.container_main, withFragment);
                     transaction1.commit();
+                    if(bottomSheetBehavior.getState() == bottomSheetBehavior.STATE_COLLAPSED){
+                        bottomSheetBehavior.setState(bottomSheetBehavior.STATE_EXPANDED);
+                    }else if(bottomSheetBehavior.getState() == bottomSheetBehavior.STATE_EXPANDED){
+                        bottomSheetBehavior.setState(bottomSheetBehavior.STATE_COLLAPSED);
+                    }
+
                     return true;
 
                 case R.id.navigation_notifications:
@@ -74,7 +85,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     RelayFragment relayFragment = new RelayFragment();
                     transaction2.replace(R.id.container_main, relayFragment);
                     transaction2.commit();
-                    bottomSheetBehavior.setState(bottomSheetBehavior.STATE_EXPANDED);
+                    if(bottomSheetBehavior.getState() == bottomSheetBehavior.STATE_COLLAPSED){
+                        bottomSheetBehavior.setState(bottomSheetBehavior.STATE_EXPANDED);
+                    }else if(bottomSheetBehavior.getState() == bottomSheetBehavior.STATE_EXPANDED){
+                        bottomSheetBehavior.setState(bottomSheetBehavior.STATE_COLLAPSED);
+                    }
 
                     return true;
             }
@@ -109,15 +124,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     actionLayout.setVisibility(View.VISIBLE);
+                    if(UtilDaoImple.getInstance().getCreateRoom() != null){
+                        UtilDaoImple.getInstance().getCreateRoom().setVisibility(View.GONE);
+                    }
 
 
                 }
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     actionLayout.setVisibility(View.GONE);
+                    if(UtilDaoImple.getInstance().getCreateRoom() != null){
+                        UtilDaoImple.getInstance().getCreateRoom().setVisibility(View.VISIBLE);
+                    }
                 }
 
                 if (newState == BottomSheetBehavior.STATE_DRAGGING) {
                     actionLayout.setVisibility(View.VISIBLE);
+                    if(UtilDaoImple.getInstance().getCreateRoom() != null){
+                        UtilDaoImple.getInstance().getCreateRoom().setVisibility(View.GONE);
+                    }
                 }
             }
 
