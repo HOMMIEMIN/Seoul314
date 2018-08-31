@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,7 +51,9 @@ public class WithFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull WithHolder holder, int position) {
-
+            holder.km.setText(String.valueOf(roomList.get(position).getDistance()));
+            holder.person.setText(String.valueOf(roomList.get(position).getPersonCount()));
+            holder.title.setText(roomList.get(position).getTitle());
         }
 
         @Override
@@ -80,7 +84,7 @@ public class WithFragment extends Fragment {
     private DatabaseReference roomReference;
     private List<WithSeoul> roomList;
     private Button createRoom;
-
+    private RoomDialog dialog;
 
 
     private RecyclerView recyclerView;
@@ -101,7 +105,7 @@ public class WithFragment extends Fragment {
     public void onStart() {
         super.onStart();
         withReference = FirebaseDatabase.getInstance().getReference("User");
-        roomReference = FirebaseDatabase.getInstance().getReference("WithSeoul");
+        roomReference = FirebaseDatabase.getInstance().getReference("RoomList");
         profile = getView().findViewById(R.id.with_profile);
         recyclerView = getView().findViewById(R.id.roomList);
         profile.setImageResource(R.drawable.lyan);
@@ -114,11 +118,21 @@ public class WithFragment extends Fragment {
         Log.i("test3","버튼생성");
         UtilDaoImple.getInstance().setCreateRoom(createRoom);
         roomList = new ArrayList<>();
+        dialog = new RoomDialog(getContext());
 
+        // 다이얼로그창 크기 조절
+        DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        WindowManager.LayoutParams wm = dialog.getWindow().getAttributes();
+        wm.copyFrom(dialog.getWindow().getAttributes());
+        wm.width = width / 1;
+        wm.height = height - 700;
+        Log.i("test1",wm.height+"");
 
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        WithAdapter adapter = new WithAdapter();
+        final WithAdapter adapter = new WithAdapter();
         recyclerView.setAdapter(adapter);
 
         listener = withReference.addChildEventListener(new ChildEventListener() {
@@ -161,14 +175,34 @@ public class WithFragment extends Fragment {
         });
 
         roomListener = roomReference.addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 WithSeoul ws = dataSnapshot.getValue(WithSeoul.class);
+                Log.i("test3",ws.getTitle());
+
+                if(ws.getRoomState().equals("waitting")) {
+                    if(roomList.size() == 0){
+                        roomList.add(ws);
+                        adapter.notifyDataSetChanged();
+                    }else{
+                        for (WithSeoul ss : roomList) {
+                            if (!(ws.getCreateUser().equals(ss.getCreateUser()))) {
+                                roomList.add(ws);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+
+
+
+                }
 
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                WithSeoul ws = dataSnapshot.getValue(WithSeoul.class);
 
             }
 
@@ -192,6 +226,13 @@ public class WithFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        createRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
             }
         });
 
