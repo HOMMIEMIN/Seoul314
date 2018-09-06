@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".RelayFragment">
+    tools:context=".relaySeoul.RelayFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -179,7 +179,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/guideline" />
+                    app:layout_constraintTop_toBottomOf="@+id/guideline"
+                    />
 
                 <TextView
                     android:id="@+id/textView18"
