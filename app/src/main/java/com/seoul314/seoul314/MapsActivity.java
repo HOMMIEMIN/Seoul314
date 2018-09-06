@@ -203,7 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             locationListener = new LocationListener() {
                 @Override
-                public void onLocationChanged(Location location) {
+                public void onLocationChanged(Location location) { // 내 위치 뜸~!
 
                     Log.i("test1","Location : " + location.getLatitude() + ", " + location.getLongitude());
 
